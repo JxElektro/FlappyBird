@@ -36,8 +36,9 @@ function App() {
   // score is the score of the player
   const [score, setScore] = useState(0);
   // bottomObstacleHeight is the height of the bottom obstacle
-  const bottomObstacleHeight = Game_Height - Obstacle_gap - obstacleHeight;
-
+  const bottomObstacleHeight = Game_Height - Obstacle_gap - obstacleHeight; 
+  // State of The bird rotation , will be uses to rotate the bird when it jumps
+  const [birdRotation, setBirdRotation] = useState(0);
 
 
 
@@ -97,6 +98,13 @@ function App() {
   const handleClick = () => {
     // Calculate the new position of the bird after a jump
     let newBirdPosition = birdPosition - Jump_Height;
+    // Calculate the new rotation of the bird after a jump
+    setBirdRotation(-30);
+    // go bacj to the original rotation after 0.1s
+    setTimeout(() => {
+      setBirdRotation(30);
+    }, 100);
+
 
     // If the game hasn't started yet, start it
     if (!gameHasStarted) {
@@ -128,7 +136,7 @@ function App() {
           height={bottomObstacleHeight}
           left={obstacleLeft}
         />
-        <Bird sizeH={Bird_SizeH} sizeW={Bird_SizeW} top={birdPosition} />
+        <Bird sizeH={Bird_SizeH} sizeW={Bird_SizeW} top={birdPosition} rotation={birdRotation}/>
         <span>{score}</span>
       </GameBox>
 
@@ -149,6 +157,7 @@ const Bird = styled.div`
   width: ${props => props.sizeW}px;
   top: ${props => props.top}px;
   margin-left: 25px;
+  transform: rotate(${props => props.rotation}deg);
   
 `;
 
