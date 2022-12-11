@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 // import the bluebird image from the asset folder
 import bluebird from './assets/sprites/bluebird.png';
+import backgroundday from './assets/sprites/backgroundday.png';
 
 // Constants
 // Bird_Size is the size of the bird
@@ -37,6 +38,8 @@ function App() {
   const bottomObstacleHeight = Game_Height - Obstacle_gap - obstacleHeight;
 
 
+
+
   // Use useEffect to update the birdPosition every 24ms (to simulate gravity)
   // if the game has started and the bird is not at the bottom of the screen
   useEffect(() => {
@@ -63,6 +66,8 @@ function App() {
       setObstacleHeight(Math.floor(Math.random() * (Game_Height - Obstacle_gap))
       );
       setScore((score) => score + 1);
+      
+      
     }
   }, [gameHasStarted, obstacleLeft]
   );
@@ -78,11 +83,12 @@ function App() {
     // stop the game, reset the obstacle and score, and start over
     if (obstacleLeft >= 0 && obstacleLeft <= Obstacle_Width && (hasCollidedTop || hasCollidedBottom)) {
       setGameHasStarted(false);
-      setScore(0);
+      // This is a bug that I haven't been able to fix yet, the score should reset to 0 and stay in the screen
+      setScore((score) => score - 1);
       setObstacleLeft(Game_Width - Obstacle_Width);
       setObstacleHeight(Math.floor(Math.random() * (Game_Height - Obstacle_gap))
       );
-      setScore(0);
+      
     }
   });
 
@@ -94,6 +100,7 @@ function App() {
     // If the game hasn't started yet, start it
     if (!gameHasStarted) {
       setGameHasStarted(true);
+      setScore(0);
     }
     // If the bird is at the top of the screen, prevent it from jumping higher
     if (newBirdPosition < 0) {
@@ -121,7 +128,7 @@ function App() {
           left={obstacleLeft}
         />
         <Bird sizeH={Bird_SizeH} sizeW={Bird_SizeW} top={birdPosition} />
-        <span>{score}</span>
+        <span>{score }</span>
       </GameBox>
 
     </Div>
@@ -140,6 +147,7 @@ const Bird = styled.div`
   height: ${props => props.sizeH}px;
   width: ${props => props.sizeW}px;
   top: ${props => props.top}px;
+  margin-left: 25px;
   
 `;
 
@@ -160,7 +168,7 @@ justify-content: center;
 const GameBox = styled.div`
   height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
-  background-color: skyblue;
+  background: url(${backgroundday});
   overflow: hidden;
 `;
 
