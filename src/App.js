@@ -42,9 +42,21 @@ function App() {
       );
       setScore((score) => score + 1);
     }
+  } , [gameHasStarted, obstacleLeft]
+  );
+  
+  useEffect(() => {
+    const hasCollidedTop = birdPosition >= 0 && birdPosition < obstacleHeight;
+    const hasCollidedBottom = birdPosition <= 500 && birdPosition >= 500 - bottomObstacleHeight;
+
+    if (obstacleLeft >= 0 && obstacleLeft <= Obstacle_Width && (hasCollidedTop || hasCollidedBottom)) {
+      setGameHasStarted(false);
+      setObstacleLeft(Game_Width - Obstacle_Width);
+      setObstacleHeight(Math.floor(Math.random() * ( Game_Height - Obstacle_gap))
+      );
+      setScore(0);
+    }
   });
-  
-  
 
 const handleClick = () => {
   let newBirdPosition = birdPosition - Jump_Height;
@@ -74,6 +86,7 @@ return (
       />
       <Bird size={Bird_Size} top={birdPosition} />
     </GameBox>
+    <span>{score}</span>
   </Div>
 );
 }
@@ -94,6 +107,10 @@ const Div = styled.div`
 display: flex;
 width: 100%;
 justify-content: center;
+& span {
+  color: black;
+  font-size: 24px;
+  margin-left: 10px;
 `;
 
 const GameBox = styled.div`
