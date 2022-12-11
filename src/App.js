@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import bluebird from './assets/sprites/bluebird.png';
 import backgroundday from './assets/sprites/backgroundday.png';
 import TopP from './assets/sprites/TopPipe.png';
+// import the Rubik80sFade.ttf font from the asset folder
+import Rubik80sFade from './assets/Rubik80sFade.ttf';
 
 // Constants
 // Bird_Size is the size of the bird
@@ -172,6 +174,7 @@ justify-content: center;
   color: black;
   font-size: 24px;
   margin-left: 10px;
+  font-family: Rubik80sFade , sans-serif;
 }
 `;
 
