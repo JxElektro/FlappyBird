@@ -7,7 +7,6 @@ import bluebird from './assets/sprites/bluebird.png';
 import backgroundday from './assets/sprites/backgroundday.png';
 import TopP from './assets/sprites/TopPipe.png';
 
-
 // Constants
 // Bird_Size is the size of the bird
 const Bird_SizeH = 24;
@@ -91,8 +90,8 @@ function App() {
       setObstacleHeight(Math.floor(Math.random() * (Game_Height - Obstacle_gap))
       );
 
-    }
-  });
+    } 
+  }, [birdPosition, obstacleLeft, obstacleHeight, bottomObstacleHeight]);
 
   // Function to handle clicks on the game screen
   const handleClick = () => {
