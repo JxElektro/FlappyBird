@@ -35,9 +35,9 @@ function App() {
   const [score, setScore] = useState(0);
   // bottomObstacleHeight is the height of the bottom obstacle
   const bottomObstacleHeight = Game_Height - Obstacle_gap - obstacleHeight;
-  
 
-// Use useEffect to update the birdPosition every 24ms (to simulate gravity)
+
+  // Use useEffect to update the birdPosition every 24ms (to simulate gravity)
   // if the game has started and the bird is not at the bottom of the screen
   useEffect(() => {
     let timeId;
@@ -75,7 +75,7 @@ function App() {
     const hasCollidedBottom = birdPosition <= 500 && birdPosition >= 500 - bottomObstacleHeight;
 
     // If the obstacle is on the screen and the bird has collided with it,
-  // stop the game, reset the obstacle and score, and start over
+    // stop the game, reset the obstacle and score, and start over
     if (obstacleLeft >= 0 && obstacleLeft <= Obstacle_Width && (hasCollidedTop || hasCollidedBottom)) {
       setGameHasStarted(false);
       setScore(0);
@@ -86,34 +86,34 @@ function App() {
     }
   });
 
- // Function to handle clicks on the game screen
-const handleClick = () => {
-  // Calculate the new position of the bird after a jump
-  let newBirdPosition = birdPosition - Jump_Height;
+  // Function to handle clicks on the game screen
+  const handleClick = () => {
+    // Calculate the new position of the bird after a jump
+    let newBirdPosition = birdPosition - Jump_Height;
 
-  // If the game hasn't started yet, start it
-  if (!gameHasStarted) {
-    setGameHasStarted(true);
-  }
-  // If the bird is at the top of the screen, prevent it from jumping higher
-  else if (newBirdPosition < 0) {
-    setBirdPosition(0);
-  }
-  // Update the bird's position with the new position
-  setBirdPosition(newBirdPosition);
-};
+    // If the game hasn't started yet, start it
+    if (!gameHasStarted) {
+      setGameHasStarted(true);
+    }
+    // If the bird is at the top of the screen, prevent it from jumping higher
+    if (newBirdPosition < 0) {
+      newBirdPosition = 0;
+    }
+    // Update the bird's position with the new position
+    setBirdPosition(newBirdPosition);
+  };
 
   return (
     <Div onClick={handleClick}>
       <GameBox height={Game_Height} width={Game_Width} >
-      
+
         <Obstacle
           top="0"
           width={Obstacle_Width}
           height={obstacleHeight}
           left={obstacleLeft}
         />
-        
+
         <Obstacle
           top={Game_Height - (obstacleHeight + bottomObstacleHeight)}
           width={Obstacle_Width}
@@ -123,7 +123,7 @@ const handleClick = () => {
         <Bird sizeH={Bird_SizeH} sizeW={Bird_SizeW} top={birdPosition} />
         <span>{score}</span>
       </GameBox>
-      
+
     </Div>
   );
 }
